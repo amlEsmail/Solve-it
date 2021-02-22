@@ -12,8 +12,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const routes:Routes=[
-  { path:'',redirectTo:"/users",pathMatch: 'full'},
-  {path:'users',component:UsersListComponent},
+  // { path:'',redirectTo:"/users",pathMatch: 'full'},
+  { path:'',component:HomeComponent},
+  {path:'Users',component:UsersListComponent},
   {path:'posts/:id',component:UserPostsComponent},
   {path:'comments/:uid/:pid',component:PostCommentsComponent},
   // {path:'posts/:id/:name/:email/:status/:createDate/:updateDate',component:UserPostsComponent},
