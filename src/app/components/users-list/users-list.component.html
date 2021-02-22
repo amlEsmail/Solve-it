@@ -1,0 +1,78 @@
+<div class="users">
+    <div class="container">
+      <div class="shadow p-3 mt-3 bg-white rounded">
+          <div class="row  align-items-center">
+              <div class="col-md-4">
+                <h4>user directory</h4>
+                <p>Lorem ipsum dolor, sit amet consectetur.</p>
+                <form  #form="ngForm" >
+                    <div class="form-group">
+                        <input class="form-control mt-2" type="text"
+                        name="searchIn"
+                        [(ngModel)]="searchInfo"
+                        #searchInput="ngModel"/>
+                    </div>
+                </form>
+
+
+
+              </div>
+              <div class="col-md-8 text-right text-capitalize font-weight-light userInfo ">
+                <span class="text-info px-2">showing {{pageSize}} of {{Users.length}} users</span>
+                  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
+                      <option [ngValue]="2">2  </option>
+                      <option [ngValue]="4">4 </option>
+                      <option [ngValue]="5">5 </option>
+                      <option [ngValue]="6">6 </option>
+                    </select>
+                    <span class="text-info px-2">Per page</span>
+              </div>
+            </div>
+        <ng-container *ngIf="loadingFlg">
+          <div class="text-center">
+            <img src="https://i.ibb.co/nswXRMv/loading.gif"/>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingFlg">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" >Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Gender</th>
+                <th scope="col" >Status</th>
+                <th scope="col" >Created Date</th>
+                <th scope="col" >Updated Date</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users" (click)="showUser(user)">
+                <th scope="row">{{ user.id }}</th>
+                <td> <ngb-highlight [result]="user.name" [term]="searchInfo"></ngb-highlight></td>
+                <td> <ngb-highlight [result]="user.email" [term]="searchInfo"></ngb-highlight></td>
+                <td> <ngb-highlight [result]="user.gender" [term]="searchInfo" ></ngb-highlight></td>
+                <td><ngb-highlight [result]="user.status" [term]="searchInfo" [ngClass]="{'text-success':user.status =='Active'}"></ngb-highlight></td>
+                <td>{{ user.created_at |date :'short'}} </td>
+                <td>{{ user.updated_at |date :'short' }}</td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <div class="well text-capitalize text-info" *ngIf="Users.length == 0">
+            no users available
+          </div>
+          <div class="text-center ">
+            <ngb-pagination  class="d-inline-block" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshUsers()">
+            </ngb-pagination>
+
+          </div>
+        </ng-container>
+
+
+       </div>
+    </div>
+</div>
+

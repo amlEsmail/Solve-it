@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="row back-btn border-bottom ">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-light shadow-sm px-4 mt-2 mb-2 text-secondary " routerLink="/users" >
+        <i class="fa fa-arrow-left"></i> BACK </button>
+    </div>
+  </div>
+  <div class=" row user-info">
+    <div class="col-md-5">
+      <span class="rounded-circle user" > <i class="fa fa-user "></i> </span>
+      <div class="info d-inline-block px-4">
+        <b class="d-block">{{user.name}}</b>
+        <span class="d-block text-secondary">{{user.email}}</span>
+        <span class="d-block" [ngClass]="{'text-success':user.status =='Active'}">{{user.status}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row posts-info border-bottom mt-4 mb-5">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col align-self-end">
+          <h6 class="text-secondary font-weight-bold  text-capitalize mb-0">Total No. of Posts</h6>
+          <span class="">{{orgPosts.length}}</span>
+        </div>
+        <div class="col align-self-end">
+          <h6 class="text-secondary font-weight-bold  text-capitalize mb-0">current page no. of posts</h6>
+          <span class="">{{posts.length}}</span>
+        </div>
+        <div class="col align-self-end">
+          <h6 class="text-secondary font-weight-bold  text-capitalize mb-0">user creation date</h6>
+          <span class="font-weight-normal text-secondary">{{user.created_at |date:'dd-MM-yyyy'}}</span>
+        </div>
+        <div class="col align-self-end">
+          <h6 class="text-secondary font-weight-bold  text-capitalize mb-0">user updated date</h6>
+          <span class="font-weight-normal text-secondary">{{user.updated_at |date:'dd-MM-yyyy'}}</span>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+  <div class="shadow p-3 mt-3 bg-white rounded">
+    <div class="row  align-items-center">
+      <div class="col-md-4">
+        <h4>user posts</h4>
+        <p>Lorem ipsum dolor, sit amet consectetur.</p>
+      </div>
+      <div class="col-md-8 text-right text-capitalize font-weight-light userInfo ">
+        <span class="text-info px-2">showing {{pageSize}} of {{orgPosts.length}} Posts</span>
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshPosts()">
+          <option [ngValue]="2">2  </option>
+          <option [ngValue]="3">3 </option>
+          <option [ngValue]="4">4 </option>
+          <option [ngValue]="5">5 </option>
+
+        </select>
+        <span class="text-info px-2">Per page</span>
+      </div>
+    </div>
+    <ng-container *ngIf="loadingFlg">
+      <div class="text-center">
+        <img src="https://i.ibb.co/nswXRMv/loading.gif"/>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!loadingFlg">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col " class="text-uppercase" >post id</th>
+            <th scope="col " class="text-uppercase">post title</th>
+            <th scope="col " class="text-uppercase">body</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let post of posts" (click)="showComments(post)">
+            <th scope="row">{{ post.id }}</th>
+            <td>{{ post.title }} </td>
+            <td>{{ post.body  }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="well text-capitalize text-info" *ngIf="orgPosts.length == 0">
+        no Posts available
+      </div>
+      <div class="text-center ">
+        <ngb-pagination  class="d-inline-block" [collectionSize]="collectionSize"
+                         [(page)]="page" [pageSize]="pageSize"
+                         (pageChange)="refreshPosts()">
+        </ngb-pagination>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row back-btn border-bottom ">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-light shadow-sm px-4 mt-2 mb-2 text-secondary " (click)="goToPosts()"  >
+        <i class="fa fa-arrow-left"></i> BACK </button>
+    </div>
+  </div>
+  <div class=" row user-info">
+    <div class="col-md-5">
+      <span class="rounded-circle user" > <i class="fa fa-user "></i> </span>
+      <div class="info d-inline-block px-4">
+        <b class="d-block">{{user.name}}</b>
+        <span class="d-block text-secondary">{{user.email}}</span>
+        <span class="d-block" [ngClass]="{'text-success':user.status =='Active'}">{{user.status}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row posts-info  mt-4 mb-5 bg-light p-3">
+    <div class="media media align-items-center">
+      <img src="https://i.ibb.co/GR8wGYy/post.jpg" class="mr-3" alt="postImage" style="max-width: 300px">
+      <div class="media-body">
+        <h5 class="mt-0" style="max-width: 600px"> {{post.title}} </h5>
+        <p> {{post.body}} </p>
+      </div>
+    </div>
+
+    </div>
+
+  <div class="shadow p-3 mt-3 bg-white rounded">
+    <div class="row  align-items-center">
+      <div class="col-md-4">
+        <h4>Comments</h4>
+        <p>Lorem ipsum dolor, sit amet consectetur.</p>
+      </div>
+      <div class="col-md-8 text-right text-capitalize font-weight-light userInfo ">
+        <span class="text-info px-2">showing {{pageSize}} of {{orgComments.length}} comments</span>
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshComments()">
+          <option [ngValue]="2">2  </option>
+          <option [ngValue]="3">3 </option>
+          <option [ngValue]="4">4 </option>
+          <option [ngValue]="5">5 </option>
+
+        </select>
+        <span class="text-info px-2">Per page</span>
+      </div>
+    </div>
+    <ng-container *ngIf="loadingFlg">
+      <div class="text-center">
+        <img src="../../../../../assets/img/loading.gif"/>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!loadingFlg">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col " class="text-uppercase" >#</th>
+            <th scope="col " class="text-uppercase">Name</th>
+            <th scope="col " class="text-uppercase">Email address</th>
+            <th scope="col " class="text-uppercase">Body</th>
+            <th scope="col " class="text-uppercase">created Date</th>
+            <th scope="col " class="text-uppercase">update Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let comment of comments" >
+            <th scope="row">{{ comment.id }}</th>
+            <td>{{ comment.name }} </td>
+            <td>{{ comment.email  }}</td>
+            <td>{{ comment.body  }}</td>
+            <td>{{ comment.created_at | date:"short" }}</td>
+            <td>{{ comment.updated_at |date:"short" }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="well text-capitalize text-info" *ngIf="orgComments.length == 0">
+        no comments available
+      </div>
+    </ng-container>
+
+    <div class="text-center ">
+      <ngb-pagination  class="d-inline-block"
+                       [collectionSize]="collectionSize"
+                       [(page)]="page"
+                       [pageSize]="pageSize"
+                       (pageChange)="refreshComments()">
+      </ngb-pagination>
+
+    </div>
+  </div>
+</div>
