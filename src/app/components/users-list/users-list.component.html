@@ -18,7 +18,7 @@
 
               </div>
               <div class="col-md-8 text-right text-capitalize font-weight-light userInfo ">
-                <span class="text-info px-2">showing {{pageSize}} of {{Users.length}} users</span>
+                <span class="text-info px-2">showing {{users.length}} of {{Users.length}} users</span>
                   <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
                       <option [ngValue]="2">2  </option>
                       <option [ngValue]="4">4 </option>

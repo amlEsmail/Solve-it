@@ -47,7 +47,7 @@
         <p>Lorem ipsum dolor, sit amet consectetur.</p>
       </div>
       <div class="col-md-8 text-right text-capitalize font-weight-light userInfo ">
-        <span class="text-info px-2">showing {{pageSize}} of {{orgPosts.length}} Posts</span>
+        <span class="text-info px-2">showing {{posts.length}} of {{orgPosts.length}} Posts</span>
         <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshPosts()">
           <option [ngValue]="2">2  </option>
           <option [ngValue]="3">3 </option>
